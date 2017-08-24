@@ -55,6 +55,7 @@ except ImportError:
 import hmac
 from gettext import gettext as _
 import socket
+import threading
 
 try:
     from httplib2 import socks
@@ -1314,7 +1315,7 @@ class Http(object):
 
     def _conn_key_for(self, scheme, authority):
         """Compute conn_key for (scheme, authority)"""
-        return scheme + ":" + authority
+        return ":".join([threading.current_thread().name, scheme, authority])
 
     def _conn_request(self, conn, request_uri, method, body, headers):
         i = 0
